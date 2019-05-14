@@ -11,7 +11,7 @@
   "contributors": [],
 
   "license": "MIT",
-  "icon": "assets/soulshards/icon.png",
+  "icon": "assets/soulbound/logo.png",
 
   "environment": "*",
   "entrypoints": {
