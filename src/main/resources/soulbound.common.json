@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "info.tehnut.soulbound.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "soulbound-refmap.json",
+  "mixins": [
+    "MixinPlayerEntity",
+    "MixinPlayerManager"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

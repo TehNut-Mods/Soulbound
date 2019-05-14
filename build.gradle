@@ -1,0 +1,98 @@
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.1.2"
+    id 'fabric-loom' version '0.2.3-SNAPSHOT'
+    id "maven-publish"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+def build_number = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : 'CUSTOM'
+
+group = package_group
+archivesBaseName = "${mod_name}-fabric"
+version = "${mc_version}-${mod_version}-${build_number}"
+
+minecraft {
+    refmapName = mod_name.toLowerCase() + '-refmap.json'
+}
+
+repositories {
+
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mc_version}"
+    mappings "net.fabricmc:yarn:${mc_version}+build.${mappings_version}"
+    modCompile "net.fabricmc:fabric-loader:${loader_version}"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+publishing {
+    tasks.publish.dependsOn 'build'
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        if (project.hasProperty('maven_repo')) {
+            maven { url maven_repo }
+        } else {
+            mavenLocal()
+        }
+    }
+}
+
+def curseRelations = {
+    requiredLibrary 'fabric'
+}
+
+curseforge {
+    if (project.hasProperty('curse_key_TehNut'))
+        apiKey = project.curse_key_TehNut
+
+    project {
+        id = "${curse_id}"
+        changelog = getChangelogText()
+        releaseType = 'release'
+
+        relations curseRelations
+
+        gameVersionStrings.clear()
+        gameVersionStrings.add("1.14")
+        gameVersionStrings.add("1.14.1")
+
+        addArtifact sourcesJar
+    }
+}
+
+String getChangelogText() {
+    def changelogFile = new File('changelog.txt')
+    String str = ''
+    String separator = '---'
+    int lineCount = 0
+    boolean done = false
+    changelogFile.eachLine {
+        if (done || it == null) {
+            return
+        }
+        if (lineCount < 3) {
+            lineCount++
+            if (it.startsWith(separator)) {
+                return
+            }
+        }
+        if (!it.startsWith(separator)) {
+            str += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
+            return
+        }
+        done = true // once we go past the first version block, parse no more
+    }
+    return str
+}

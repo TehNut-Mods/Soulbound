@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "soulbound",
+  "version": "1.0.0",
+
+  "name": "Soulbound",
+  "description": "An enchantment that will be retain items upon death",
+  "authors": [
+    "TehNut"
+  ],
+  "contributors": [],
+
+  "license": "MIT",
+  "icon": "assets/soulshards/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "info.tehnut.soulbound.Soulbound"
+    ]
+  },
+  "mixins": [
+    "soulbound.common.json"
+  ],
+  "requires": {
+    "fabricloader": "=>0.4.0"
+  }
+}
