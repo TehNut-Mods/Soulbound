@@ -36,7 +36,7 @@ publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            artifact remapJar.output
             artifact sourcesJar
         }
     }
@@ -49,10 +49,6 @@ publishing {
     }
 }
 
-def curseRelations = {
-    requiredLibrary 'fabric'
-}
-
 curseforge {
     if (project.hasProperty('curse_key_TehNut'))
         apiKey = project.curse_key_TehNut
@@ -61,13 +57,19 @@ curseforge {
         id = "${curse_id}"
         changelog = getChangelogText()
         releaseType = 'release'
-
-        relations curseRelations
-
-        gameVersionStrings.clear()
-        gameVersionStrings.add("1.14")
-
+        
+        addGameVersion "1.14"
+        addGameVersion "Java 8"
         addArtifact sourcesJar
+        
+        afterEvaluate {
+            mainArtifact(remapJar.output)
+            uploadTask.dependsOn(remapJar)
+        }
+    }
+    
+    options {
+        forgeGradleIntegration = false
     }
 }
 
