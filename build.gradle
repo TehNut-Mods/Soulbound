@@ -61,9 +61,9 @@ curseforge {
         addGameVersion "1.14"
         addGameVersion "Java 8"
         addArtifact sourcesJar
+        mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
         
         afterEvaluate {
-            mainArtifact(remapJar.output)
             uploadTask.dependsOn(remapJar)
         }
     }
