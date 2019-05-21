@@ -2,6 +2,7 @@ package info.tehnut.soulbound;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import info.tehnut.soulbound.api.SoulboundContainer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
@@ -41,6 +42,10 @@ public class Soulbound implements ModInitializer {
     @Override
     public void onInitialize() {
         Registry.register(Registry.ENCHANTMENT, new Identifier("soulbound", "soulbound"), ENCHANT_SOULBOUND);
+
+        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_main"), player -> player.inventory.main);
+        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_off"),player -> player.inventory.offHand);
+        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_armor"),player -> player.inventory.armor);
     }
 
     public static class Config {

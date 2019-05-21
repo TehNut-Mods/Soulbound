@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "info.tehnut.soulbound.mixin",
+  "package": "info.tehnut.soulbound.core.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "soulbound-refmap.json",
   "mixins": [
