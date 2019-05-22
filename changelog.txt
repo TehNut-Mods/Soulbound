@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 1.0.1
+------------------------------------------------------
+
+- Added an API to allow mods to expose their own player-attached inventories.
+- Reworked how items are persisted
+    - Items are now saved to world data on death and restored upon respawn
+    - This will allow users to disconnect from the world when they die and still retain their items when they rejoin
+
+------------------------------------------------------
 Version 1.0.0
 ------------------------------------------------------
 

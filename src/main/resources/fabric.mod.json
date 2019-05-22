@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "soulbound",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "name": "Soulbound",
   "description": "An enchantment that will be retain items upon death",

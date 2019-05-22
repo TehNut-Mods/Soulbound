@@ -32,12 +32,20 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
+task apiJar(type: Jar) {
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+    include 'info/tehnut/soulbound/api/**/*'
+    classifier = 'api'
+}
+
 publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
             artifact remapJar.output
             artifact sourcesJar
+            artifact apiJar
         }
     }
     repositories {
@@ -61,6 +69,7 @@ curseforge {
         addGameVersion "1.14"
         addGameVersion "Java 8"
         addArtifact sourcesJar
+        addArtifact apiJar
         mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
         
         afterEvaluate {
