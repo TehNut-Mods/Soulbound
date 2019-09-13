@@ -1,7 +1,7 @@
 package info.tehnut.soulbound.core.mixin;
 
 import com.google.common.collect.Lists;
-import info.tehnut.soulbound.core.SlottedItem;
+import info.tehnut.soulbound.api.SlottedItem;
 import info.tehnut.soulbound.Soulbound;
 import info.tehnut.soulbound.api.SoulboundContainer;
 import info.tehnut.soulbound.core.SoulboundPersistentState;
@@ -20,7 +20,7 @@ import java.util.List;
 public class MixinPlayerEntity {
 
     @Inject(method = "dropInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;dropAll()V"))
-    private void enchants$dropInventory$soulbound(CallbackInfo callbackInfo) {
+    private void soulbound$dropInventory(CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         if ( player.getServer() == null)
             return;
@@ -40,7 +40,7 @@ public class MixinPlayerEntity {
                 int soulboundLevel = EnchantmentHelper.getLevel(Soulbound.ENCHANT_SOULBOUND, stack);
                 if (soulboundLevel > 0) {
                     soulboundItems.add(new SlottedItem(id, stack, i));
-                    inventory.set(i, ItemStack.EMPTY);
+                    container.removeStoredItem(player, i);
                 }
             }
         });

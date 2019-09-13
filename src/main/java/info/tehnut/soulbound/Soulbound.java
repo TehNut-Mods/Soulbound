@@ -8,6 +8,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Lazy;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileReader;
@@ -16,6 +18,7 @@ import java.io.IOException;
 
 public class Soulbound implements ModInitializer {
 
+    public static final Logger LOGGER = LogManager.getLogger("Soulbound");
     public static final EnchantmentSoulbound ENCHANT_SOULBOUND = new EnchantmentSoulbound();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final Lazy<Config> CONFIG = new Lazy<>(() -> {
@@ -44,8 +47,18 @@ public class Soulbound implements ModInitializer {
         Registry.register(Registry.ENCHANTMENT, new Identifier("soulbound", "soulbound"), ENCHANT_SOULBOUND);
 
         SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_main"), player -> player.inventory.main);
-        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_off"),player -> player.inventory.offHand);
-        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_armor"),player -> player.inventory.armor);
+        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_off"), player -> player.inventory.offHand);
+        SoulboundContainer.CONTAINERS.put(new Identifier("soulbound", "inv_armor"), player -> player.inventory.armor);
+        loadCompat("trinkets", "info.tehnut.soulbound.compat.CompatibilityTrinkets");
+    }
+
+    private static void loadCompat(String modid, String clazz) {
+        try {
+            if (FabricLoader.getInstance().isModLoaded(modid))
+                Class.forName(clazz);
+        } catch (Exception e) {
+            LOGGER.error("Failed to load {} compatibility from {}", modid, clazz);
+        }
     }
 
     public static class Config {

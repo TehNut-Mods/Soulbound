@@ -2,6 +2,7 @@ package info.tehnut.soulbound.core;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import info.tehnut.soulbound.api.SlottedItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;

@@ -1,4 +1,4 @@
-package info.tehnut.soulbound.core;
+package info.tehnut.soulbound.api;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;

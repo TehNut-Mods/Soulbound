@@ -1,6 +1,6 @@
 package info.tehnut.soulbound.core.mixin;
 
-import info.tehnut.soulbound.core.SlottedItem;
+import info.tehnut.soulbound.api.SlottedItem;
 import info.tehnut.soulbound.Soulbound;
 import info.tehnut.soulbound.api.SoulboundContainer;
 import info.tehnut.soulbound.core.SoulboundPersistentState;
@@ -31,8 +31,8 @@ public class MixinPlayerManager {
     @Final
     private MinecraftServer server;
 
-    @Inject(method = "respawnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;setMainHand(Lnet/minecraft/util/AbsoluteHand;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void enchants$respawnPlayer(ServerPlayerEntity oldPlayer, DimensionType dimension, boolean dimensionChange, CallbackInfoReturnable<ServerPlayerEntity> callback, BlockPos pos, boolean forcedSpawn, ServerPlayerInteractionManager interactionManager, ServerPlayerEntity newPlayer) {
+    @Inject(method = "respawnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;setMainArm(Lnet/minecraft/util/Arm;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    private void soulbound$respawnPlayer(ServerPlayerEntity oldPlayer, DimensionType dimension, boolean dimensionChange, CallbackInfoReturnable<ServerPlayerEntity> callback, BlockPos pos, boolean forcedSpawn, ServerPlayerInteractionManager interactionManager, ServerPlayerEntity newPlayer) {
         if (dimensionChange)
             return;
 
@@ -43,7 +43,6 @@ public class MixinPlayerManager {
             return;
 
         SoulboundContainer.CONTAINERS.forEach((id, container) -> {
-            List<ItemStack> newInventory = container.getContainerStacks(newPlayer);
             savedItems.stream().filter(item -> item.getContainerId().equals(id)).forEach(item -> {
                 if (newPlayer.getRand().nextFloat() <= Soulbound.CONFIG.get().getSoulboundRemovalChance()) {
                     Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(item.getStack());
@@ -51,7 +50,7 @@ public class MixinPlayerManager {
                     EnchantmentHelper.set(enchantments, item.getStack());
                 }
 
-                newInventory.set(item.getSlot(), item.getStack());
+                container.replaceItem(newPlayer, item);
             });
         });
 

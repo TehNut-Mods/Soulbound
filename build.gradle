@@ -1,6 +1,6 @@
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.1.2"
-    id 'fabric-loom' version '0.2.3-SNAPSHOT'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id 'fabric-loom' version '0.2.4-SNAPSHOT'
     id "maven-publish"
 }
 
@@ -18,13 +18,17 @@ minecraft {
 }
 
 repositories {
-
+    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+    maven { url = "https://maven.abusedmaster.xyz/" }
+    maven { url = "https://jitpack.io" }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${mc_version}"
     mappings "net.fabricmc:yarn:${mc_version}+build.${mappings_version}"
     modCompile "net.fabricmc:fabric-loader:${loader_version}"
+    modCompile "net.fabricmc.fabric-api:fabric-api:${api_version}"
+    modCompile "com.github.emilyploszaj:trinkets:v${trinkets_version}"
 }
 
 task sourcesJar(type: Jar) {
