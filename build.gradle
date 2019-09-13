@@ -18,7 +18,6 @@ minecraft {
 }
 
 repositories {
-    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
     maven { url = "https://maven.abusedmaster.xyz/" }
     maven { url = "https://jitpack.io" }
 }

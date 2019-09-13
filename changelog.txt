@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 1.1.0
+------------------------------------------------------
+
+- Allow Soulbound to be applied to any item
+- Extended API to allow mods to have more control over how items are stored and provided
+- Added support for Trinkets (https://www.curseforge.com/minecraft/mc-mods/trinkets-fabric)
+
+------------------------------------------------------
 Version 1.0.1
 ------------------------------------------------------
 
