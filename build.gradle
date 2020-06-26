@@ -1,6 +1,6 @@
 plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
-    id 'fabric-loom' version '0.2.4-SNAPSHOT'
+    id 'fabric-loom' version '0.4-SNAPSHOT'
     id "maven-publish"
 }
 
@@ -24,7 +24,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${mc_version}"
-    mappings "net.fabricmc:yarn:${mc_version}+build.${mappings_version}"
+    mappings "net.fabricmc:yarn:${mc_version}+build.${mappings_version}:v2"
     modCompile "net.fabricmc:fabric-loader:${loader_version}"
     modCompile "net.fabricmc.fabric-api:fabric-api:${api_version}"
     modCompile "com.github.emilyploszaj:trinkets:v${trinkets_version}"
@@ -46,7 +46,7 @@ publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
-            artifact remapJar.output
+            artifact remapJar
             artifact sourcesJar
             artifact apiJar
         }
@@ -69,7 +69,7 @@ curseforge {
         changelog = getChangelogText()
         releaseType = 'release'
         
-        addGameVersion "1.14"
+        addGameVersion "1.16.1"
         addGameVersion "Java 8"
         addArtifact sourcesJar
         addArtifact apiJar

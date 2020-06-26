@@ -9,26 +9,32 @@ import net.minecraft.item.ItemStack;
 public class EnchantmentSoulbound extends Enchantment {
 
     public EnchantmentSoulbound() {
-        super(Weight.VERY_RARE, EnchantmentTarget.ALL, EquipmentSlot.values());
+        // Anybody who directly checks the target field is bad
+        super(Rarity.VERY_RARE, EnchantmentTarget.BREAKABLE, EquipmentSlot.values());
     }
 
     @Override
-    public int getMaximumLevel() {
-        return 1;
-    }
-
-    @Override
-    public int getMinimumPower(int level) {
+    public int getMinPower(int level) {
         return 15;
     }
 
     @Override
-    protected boolean differs(Enchantment enchantment) {
-        return super.differs(enchantment) && enchantment != Enchantments.VANISHING_CURSE;
+    public int getMaxPower(int level) {
+        return super.getMinPower(level) + 50;
     }
 
     @Override
-    public boolean isAcceptableItem(ItemStack itemStack_1) {
+    public int getMaxLevel() {
+        return 1;
+    }
+
+    @Override
+    protected boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != Enchantments.VANISHING_CURSE;
+    }
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
         return true;
     }
 }

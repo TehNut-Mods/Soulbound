@@ -21,18 +21,18 @@ public class CompatibilityTrinkets implements SoulboundContainer {
     public List<ItemStack> getContainerStacks(PlayerEntity player) {
         Inventory inventory = TrinketsApi.getTrinketsInventory(player);
         List<ItemStack> stacks = new ArrayList<>();
-        for (int i = 0; i < inventory.getInvSize(); i++)
-            stacks.add(inventory.getInvStack(i));
+        for (int i = 0; i < inventory.size(); i++)
+            stacks.add(inventory.getStack(i));
         return stacks;
     }
 
     @Override
     public void replaceItem(PlayerEntity player, SlottedItem item) {
-        TrinketsApi.getTrinketsInventory(player).setInvStack(item.getSlot(), item.getStack());
+        TrinketsApi.getTrinketsInventory(player).setStack(item.getSlot(), item.getStack());
     }
 
     @Override
     public void removeStoredItem(PlayerEntity player, int slot) {
-        TrinketsApi.getTrinketsInventory(player).setInvStack(slot, ItemStack.EMPTY);
+        TrinketsApi.getTrinketsInventory(player).setStack(slot, ItemStack.EMPTY);
     }
 }
