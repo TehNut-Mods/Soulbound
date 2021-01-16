@@ -34,7 +34,7 @@ public class MixinPlayerManager {
     private MinecraftServer server;
 
     @Inject(method = "respawnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;setMainArm(Lnet/minecraft/util/Arm;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void soulbound$respawnPlayer(ServerPlayerEntity oldPlayer, boolean dimensionChange, CallbackInfoReturnable<ServerPlayerEntity> callback, BlockPos blockPos, boolean forcedSpawn, ServerWorld oldWorld, Optional optional, ServerPlayerInteractionManager interactionManager, ServerWorld newWorld, ServerPlayerEntity newPlayer) {
+    private void soulbound$respawnPlayer(ServerPlayerEntity oldPlayer, boolean dimensionChange, CallbackInfoReturnable<ServerPlayerEntity> callback, BlockPos blockPos, float spawnAngle, boolean forcedSpawn, ServerWorld oldWorld, Optional optional, ServerPlayerInteractionManager interactionManager, ServerWorld newWorld, ServerPlayerEntity newPlayer) {
         if (dimensionChange)
             return;
 
