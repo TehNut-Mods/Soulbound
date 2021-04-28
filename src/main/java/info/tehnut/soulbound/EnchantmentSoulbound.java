@@ -10,7 +10,7 @@ public class EnchantmentSoulbound extends Enchantment {
 
     public EnchantmentSoulbound() {
         // Anybody who directly checks the target field is bad
-        super(Rarity.VERY_RARE, EnchantmentTarget.BREAKABLE, EquipmentSlot.values());
+        super(Rarity.RARE, EnchantmentTarget.BREAKABLE, EquipmentSlot.values());
     }
 
     @Override
